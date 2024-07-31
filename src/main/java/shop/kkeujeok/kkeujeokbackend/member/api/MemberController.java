@@ -20,8 +20,14 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @PostMapping("/")
+    @PostMapping("/friend-request")
     public RspTemplate<FriendResDto> sendFriendshipRequest(@CurrentUserEmail String fromEmail, @RequestBody FriendReqDto friendReqDto) {
         return new RspTemplate<>(HttpStatus.OK, "친구 요청 전송", memberService.requestFriend(fromEmail, friendReqDto));
+    }
+
+    @PostMapping("/friend-accept")
+    public RspTemplate<FriendResDto> acceptFriend(@CurrentUserEmail String userEmail, @RequestBody FriendReqDto friendReqDto) {
+        FriendResDto response = memberService.acceptFriend(userEmail, friendReqDto.email());
+        return new RspTemplate<>(HttpStatus.OK, "친구 요청 수락", response);
     }
 }

@@ -9,9 +9,6 @@ import shop.kkeujeok.kkeujeokbackend.global.entity.BaseEntity;
 import shop.kkeujeok.kkeujeokbackend.global.entity.Status;
 import shop.kkeujeok.kkeujeokbackend.member.domain.Member;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,6 +25,7 @@ public class Friend extends BaseEntity {
 
     private String friendEmail;
 
+    @Enumerated(value = EnumType.STRING)
     private FriendStatus friendStatus;
 
     private boolean isFrom;

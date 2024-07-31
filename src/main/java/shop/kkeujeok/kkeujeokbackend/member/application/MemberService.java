@@ -8,6 +8,7 @@ import shop.kkeujeok.kkeujeokbackend.member.domain.repository.MemberRepository;
 import shop.kkeujeok.kkeujeokbackend.member.friend.api.dto.reqeust.FriendReqDto;
 import shop.kkeujeok.kkeujeokbackend.member.friend.api.dto.response.FriendResDto;
 import shop.kkeujeok.kkeujeokbackend.member.friend.domain.Friend;
+import shop.kkeujeok.kkeujeokbackend.member.friend.domain.FriendStatus;
 import shop.kkeujeok.kkeujeokbackend.member.friend.domain.repository.FriendRepository;
 
 @Service
@@ -37,6 +38,15 @@ public class MemberService {
     }
 
     // 친구 추가 요청 수락
+    @Transactional
+    public FriendResDto acceptFriend(String userEmail, String friendEmail) {
+        friendRepository.updateFriendStatusByEmails(userEmail, friendEmail, FriendStatus.ACCEPT);
+
+        Member fromMember = memberRepository.findByEmail(userEmail).orElseThrow(EmailNotFoundException::new);
+        Member toMember = memberRepository.findByEmail(friendEmail).orElseThrow(EmailNotFoundException::new);
+
+        return FriendResDto.of(fromMember, toMember);
+    }
 
     // 친구 추가 요청 거절
 
