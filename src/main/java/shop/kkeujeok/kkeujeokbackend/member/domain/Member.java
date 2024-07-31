@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shop.kkeujeok.kkeujeokbackend.global.entity.BaseEntity;
 import shop.kkeujeok.kkeujeokbackend.global.entity.Status;
+import shop.kkeujeok.kkeujeokbackend.member.friend.domain.Friend;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,6 +35,9 @@ public class Member extends BaseEntity {
     private SocialType socialType;
 
     private String nickname;
+
+    @OneToMany(mappedBy = "member")
+    private List<Friend> friendList = new ArrayList<>();
 
     @Builder
     private Member(Status status, Role role, String email, String name, String picture, SocialType socialType, boolean firstLogin, String nickname) {
